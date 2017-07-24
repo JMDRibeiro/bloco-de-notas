@@ -1,0 +1,119 @@
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Notepad JR</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    .input{
+      position:absolute;
+      top: 1%;  
+      left:30%;
+      padding: 8px 66px;
+    }
+    .posButton{
+      position:absolute;
+      top: 1%;  
+      left:53%;
+      padding: 8px 12px;
+    }
+    .btn-danger {
+      padding: 1px 5px;
+      font-size: 10px;
+     }
+     .table {
+      border-collapse:separate;
+      border-spacing:10px 10px;
+      position:absolute;
+      top: 7%;  
+      left:18%;
+      max-width: 900px;
+      }​​​​​​​​​​​​​
+    .tdTexto {
+    width: 300px;
+    }
+    .tdButton {
+    width: 100px;
+    }
+    </style>
+  </head>
+  <body>
+  
+  <script>
+  valorId = 0;
+  linhas = [];
+   function inserirLinha(){
+    var tabela = document.getElementById('blocoDeNotas');
+
+    var novaLinha   = tabela.insertRow(tabela.rows.length); // cria uma nova linha, na posição que é o tamanho da tabela
+    var id = valorId;
+    novaLinha.setAttribute('id',id); //seta o valor do id da linha
+
+
+    var celulaTexto  = novaLinha.insertCell(0); // cria, dentro da linha a célula  que irá armazenar o texto
+    var celulaBotao  = novaLinha.insertCell(1); // cria, dentro da linha a célula  que irá armazenar o botão
+   
+    // nas linhas abaixo seta os atributos e associa os elementos criados a outros já existentes (appendChild())
+    celulaTexto.setAttribute('class','tdTexto'); 
+    celulaBotao.setAttribute('class','tdButton');
+
+    var texto = document.getElementById('campoDeTexto').value + "   ";
+    document.getElementById('campoDeTexto').value = " ";
+
+    var textoDigitado  = document.createTextNode(texto);
+    celulaTexto.appendChild(textoDigitado);
+
+    var button = document.createElement("BUTTON");
+    button.setAttribute('type','button');
+    button.setAttribute('class','btn btn-danger');
+    button.appendChild(document.createTextNode('x'));
+    button.setAttribute('id',id);
+    button.setAttribute('onClick','deletarLinha('+id+')');
+
+    celulaBotao.appendChild(button);
+
+    //adiciona o id a lista de ids da tabela
+    linhas[linhas.length] = id;
+    valorId++;
+
+  }
+
+function deletarLinha(id) {
+  document.getElementById("blocoDeNotas").deleteRow(procurarLinhaById(id));
+  
+}
+
+function procurarLinhaById(id){
+ var tabela = document.getElementById('blocoDeNotas');
+ var pos = 0;
+ for (var i = 0; i < tabela.rows.length; i++) {
+      if(tabela.rows[i].id == id){
+        pos = i;
+      }
+ }
+ return pos;
+}
+  </script>
+  
+ <table id="blocoDeNotas"   class="table">
+<form><input type="text" name="numero" placeholder="Adicione uma nova nota" class = "input form-inline" id="campoDeTexto">
+      <button type="button" class="btn btn-warning posButton"  onclick="inserirLinha()">Add</button>
+</form>
+</table>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
